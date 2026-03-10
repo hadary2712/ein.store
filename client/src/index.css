@@ -1,0 +1,87 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --font-display: 'Playfair Display', serif;
+    --font-body: 'DM Sans', sans-serif;
+
+    /* Elegant Minimal Palette */
+    /* Cream/Beige Background */
+    --background: 42 33% 97%;
+    --foreground: 30 20% 12%;
+
+    /* Pure white for cards to pop slightly off the cream */
+    --card: 0 0% 100%;
+    --card-foreground: 30 20% 12%;
+
+    /* Bronze/Gold Accents */
+    --primary: 36 34% 48%;
+    --primary-foreground: 42 33% 97%;
+
+    /* Soft beige for secondary elements */
+    --secondary: 40 25% 90%;
+    --secondary-foreground: 30 20% 12%;
+
+    --muted: 40 20% 90%;
+    --muted-foreground: 30 10% 45%;
+
+    --accent: 36 34% 48%;
+    --accent-foreground: 42 33% 97%;
+
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 40 25% 86%;
+    --input: 40 25% 86%;
+    --ring: 36 34% 48%;
+
+    --radius: 0rem; /* Sharp edges for high-end editorial feel */
+  }
+
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground antialiased;
+    font-family: var(--font-body);
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-display);
+    @apply font-normal tracking-tight text-foreground;
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+  
+  .luxury-shadow {
+    box-shadow: 0 10px 40px -10px rgba(44, 36, 27, 0.08);
+  }
+  
+  .luxury-shadow-hover {
+    box-shadow: 0 20px 40px -10px rgba(44, 36, 27, 0.12);
+  }
+}
+
+/* Custom Scrollbar for elegant feel */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: hsl(var(--border));
+  border-radius: 10px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: hsl(var(--primary));
+}
