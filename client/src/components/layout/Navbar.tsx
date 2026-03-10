@@ -1,12 +1,13 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'wouter';
-import { ShoppingBag, Menu, Search } from 'lucide-react';
+import { ShoppingBag, Menu, Search, X } from 'lucide-react';
 import { useCart } from '@/store/use-cart';
 import { motion, AnimatePresence } from 'framer-motion';
 import logoImg from "@assets/WhatsApp_Image_2026-03-08_at_11.52.31_AM_1773161137107.jpeg";
 
 export function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const { setIsOpen, totalItems } = useCart();
 
   useEffect(() => {
@@ -33,8 +34,16 @@ export function Navbar() {
           
           {/* Mobile Menu & Search (Left) */}
           <div className="flex items-center gap-4 flex-1">
-            <button className="p-2 -ml-2 text-foreground/80 hover:text-primary transition-colors lg:hidden">
-              <Menu className="w-5 h-5" />
+            <button
+              onClick={() => setIsMobileMenuOpen((open) => !open)}
+              className="p-2 -ml-2 text-foreground/80 hover:text-primary transition-colors lg:hidden"
+              aria-label="Toggle navigation"
+            >
+              {isMobileMenuOpen ? (
+                <X className="w-5 h-5" />
+              ) : (
+                <Menu className="w-5 h-5" />
+              )}
             </button>
             <div className="hidden lg:flex items-center gap-8">
               <Link href="/products" className="text-sm font-bold uppercase tracking-[0.15em] text-foreground/80 hover:text-primary transition-colors relative group">
@@ -92,6 +101,43 @@ export function Navbar() {
 
         </div>
       </div>
+
+      {/* Mobile dropdown menu */}
+      <AnimatePresence>
+        {isMobileMenuOpen && (
+          <motion.nav
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -10 }}
+            transition={{ duration: 0.2 }}
+            className="lg:hidden bg-background/95 backdrop-blur-md border-b border-border/60"
+          >
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 space-y-3">
+              <Link
+                href="/products"
+                onClick={() => setIsMobileMenuOpen(false)}
+                className="block text-sm font-bold uppercase tracking-[0.18em] text-foreground/80 hover:text-primary transition-colors"
+              >
+                Shop
+              </Link>
+              <Link
+                href="/contact"
+                onClick={() => setIsMobileMenuOpen(false)}
+                className="block text-sm font-bold uppercase tracking-[0.18em] text-foreground/80 hover:text-primary transition-colors"
+              >
+                Contact
+              </Link>
+              <Link
+                href="/"
+                onClick={() => setIsMobileMenuOpen(false)}
+                className="block text-sm font-bold uppercase tracking-[0.18em] text-foreground/80 hover:text-primary transition-colors"
+              >
+                About
+              </Link>
+            </div>
+          </motion.nav>
+        )}
+      </AnimatePresence>
     </motion.header>
   );
 }
